@@ -14,25 +14,19 @@ Esta é uma API REST simples para gerenciar posts. A aplicação está conteiner
 ### Funcionalidades da API
 A API permite as seguintes operações:
 
-**Autores**
-
-- GET /posts - Retorna todos os posts.
-- GET /posts/:id - Retorna um post específico pelo ID.
-- GET /posts/search - Busca de posts por termo.
-- POST /posts - Cria um novo post.
-- PUT /posts/:id - Atualiza um post pelo ID.
-- DELETE /posts/:id - Deleta um post pelo ID
-
-**Posts**
-
-- GET /posts - Retorna todos os posts.
-- GET /posts/:id - Retorna um post específico pelo ID.
-- POST /posts - Cria um novo post.
-- PUT /posts/:id - Atualiza um post pelo ID.
-- DELETE /posts/:id - Deleta um post pelo ID
-
+#### Autores
 Método | Endpoint | Função
------------- | -------------
+------- | ---- | -------------
+`GET` | `/authors` | Retorna todos os autpres.
+`GET` | `/authors/:id` | Retorna um autor específico pelo ID.
+`GET` | `/authors/search` | Retorna authores por termo buscado.
+`POST` | `/authors` | Cria um novo autor.
+`PUT` | `/authors/:id` | Atualiza um autor pelo ID.
+`DELETE` | `/authors/:id` | Deleta um autor pelo ID
+
+#### Posts
+Método | Endpoint | Função
+------- | ---- | -------------
 `GET` | `/posts` | Retorna todos os posts.
 `GET` | `/posts/:id` | Retorna um post específico pelo ID.
 `GET` | `/posts/search` | Retorna posts por termo buscado.
@@ -52,7 +46,7 @@ cd fiap-tech-challange-02
 ```
 2. Crie um arquivo `.env` na raiz do projeto para configurar variáveis de ambiente:
 ```
-MONGO_URI=mongodb://mongo:27017/postsdb
+MONGODB_URI=mongodb+srv://<mongodb_user>:<db_password>@cluster0.p78lc.mongodb.net/<database>?retryWrites=true&w=majority&appName=Cluster0
 PORT=3000
 ```
 3. Inicie os contêineres:
