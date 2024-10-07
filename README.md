@@ -31,14 +31,14 @@ A API permite as seguintes operações:
 - PUT /posts/:id - Atualiza um post pelo ID.
 - DELETE /posts/:id - Deleta um post pelo ID
 
-Endpoint | Second Header
+Método | Endpoint | Função
 ------------ | -------------
-`GET` `/posts` | Retorna todos os posts.
-`GET` `/posts/:id` | Retorna um post específico pelo ID.
-`GET` `/posts/search` | Busca de posts por termo.
-`POST` `/posts` | Cria um novo post.
-`PUT` `/posts/:id` | Atualiza um post pelo ID.
-`DELETE` `/posts/:id` | Deleta um post pelo ID
+`GET` | `/posts` | Retorna todos os posts.
+`GET` | `/posts/:id` | Retorna um post específico pelo ID.
+`GET` | `/posts/search` | Retorna posts por termo buscado.
+`POST` | `/posts` | Cria um novo post.
+`PUT` | `/posts/:id` | Atualiza um post pelo ID.
+`DELETE` | `/posts/:id` | Deleta um post pelo ID
 
 ### Requisitos
 - Docker e Docker Compose instalados na máquina.
@@ -48,7 +48,7 @@ Siga os passos abaixo para rodar a aplicação usando Docker.
 1. Clone este repositório: 
 ```
 git clone https://github.com/ejuniorls/fiap-tech-challange-02
-cd api-posts
+cd fiap-tech-challange-02
 ```
 2. Crie um arquivo `.env` na raiz do projeto para configurar variáveis de ambiente:
 ```
