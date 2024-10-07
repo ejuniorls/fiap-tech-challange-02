@@ -1,0 +1,59 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+
+# Diretórios de construção
+dist/
+build/
+out/
+
+# Cache
+.cache/
+.tmp/
+
+# Diretórios de testes de cobertura
+coverage/
+
+# Editor e Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Pastas de configuração de IDEs
+
+# Visual Studio Code
+.vscode/
+
+# JetBrains (IntelliJ, WebStorm, etc.)
+.idea/
+*.iml
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Eclipse
+.project
+.classpath
+.cproject
+.settings/
+
+# NetBeans
+nbproject/private/
+
+# Outros
+*.code-workspace
