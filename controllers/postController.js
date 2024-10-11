@@ -115,6 +115,52 @@ exports.getPostById = async (req, res) => {
 
 /**
  * @swagger
+ * /posts/search/{word}:
+ *   get:
+ *     summary: Obter posts por busca por palavra
+ *     tags: [Posts]
+ *     parameters:
+ *       - in: path
+ *         name: word
+ *         required: true
+ *         description: busca por palavra
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Detalhes do post
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 title:
+ *                   type: string
+ *                 content:
+ *                   type: string
+ *                 author:
+ *                   type: string
+ *       404:
+ *         description: Post não encontrado
+ *       500:
+ *         description: Erro ao obter post
+ */
+exports.searchPost = async (req, res) => {
+    try {
+        const posts = await Post.find({
+            $or: [
+                { title: { $regex: req.params.word, $options: 'i' } },
+                { content: { $regex: req.params.word, $options: 'i' } }
+            ]
+        });
+        res.json(posts);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+/**
+ * @swagger
  * /posts/{id}:
  *   put:
  *     summary: Atualizar um post pelo ID

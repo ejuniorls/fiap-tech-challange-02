@@ -1,23 +1,37 @@
-version: '3'
+# version: '3.7'
+
 services:
-  app:
+  web:
+    container_name: web
     build: .
-    ports:
-      - "3000:3000"
-    depends_on:
-      - mongo
-    environment:
-      - MONGO_URI=mongodb://mongo:27017/meuapp
+    restart: always
+    env_file:
+      - .env.production
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-
-  mongo:
-    image: mongo:latest
+    depends_on:
+      - db
+    links:
+      - db
     ports:
-      - "27017:27017"
+      - ${APP_PORT}:${APP_PORT}
+    command: npm start
+
+  db:
+    image: mongo:latest
+    container_name: db
+    restart: always
+    env_file:
+      - .env.production
+    ports:
+      - '${DB_PORT}:27017'
     volumes:
-      - mongo-data:/data/db
+      - dbdata-volume:/data/db
+    environment:
+      MONGO_INITDB_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DB_DATABASE}
 
 volumes:
-  mongo-data:
+  dbdata-volume:

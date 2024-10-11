@@ -109,6 +109,50 @@ exports.getAuthorById = async (req, res) => {
 
 /**
  * @swagger
+ * /authors/search/{word}:
+ *   get:
+ *     summary: Obter autores por busca por palavra
+ *     tags: [Authors]
+ *     parameters:
+ *       - in: path
+ *         name: word
+ *         required: true
+ *         description: busca por palavra
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Detalhes do autor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *       404:
+ *         description: Autor não encontrado
+ *       500:
+ *         description: Erro ao obter autor
+ */
+exports.searchAuthor = async (req, res) => {
+    try {
+        const authors = await Author.find({
+            $or: [
+                { name: { $regex: req.params.word, $options: 'i' } },
+                { email: { $regex: req.params.word, $options: 'i' } }
+            ]
+        });
+        res.json(authors);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+/**
+ * @swagger
  * /authors/{id}:
  *   put:
  *     summary: Atualizar um autor pelo ID

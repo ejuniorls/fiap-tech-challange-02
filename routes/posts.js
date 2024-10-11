@@ -11,6 +11,9 @@ router.get('/', postController.getPosts);
 // Rota para obter um post pelo ID
 router.get('/:id', postController.getPostById);
 
+// Rota para buscar post por palavra
+router.get('/search/:word', postController.searchPost);
+
 // Rota para atualizar um post
 router.put('/:id', postController.updatePost);
 

@@ -1,17 +1,38 @@
-# Usar uma imagem oficial do Node.js
-FROM node:22-alpine
+# FROM node:14.17.5-buster-slim
+# EXPOSE 3000
 
-# Definir o diretório de trabalho
-WORKDIR /usr/src/app
+# RUN useradd --user-group --create-home --shell /bin/false app
+# RUN npm i -g npm@6.14.14
 
-# Copiar o código para o diretório de trabalho
-COPY . .
+# ENV HOME=/home/app
+# ENV TZ=America/Sao_Paulo
 
-# Instalar dependências
+# ADD package.json  $HOME/webapp/
+# RUN chown -R app:app $HOME/*
+
+# USER app
+# WORKDIR $HOME/webapp
+# RUN npm i
+
+# USER root
+# ADD . $HOME/webapp
+# RUN chown -R app:app $HOME/*
+# USER app
+
+# CMD ["npm", "start"]
+
+FROM node:alpine
+
+LABEL maintainer "William Tenório da Silva <contato@williamtenorio.com.br>"
+
+WORKDIR /usr/src/app/
+
+COPY package*.json ./
+
+# RUN systemctl start mongod
+
 RUN npm install
 
-# Expor a porta que a aplicação vai usar
-EXPOSE 3000
+COPY . .
 
-# Comando para rodar a aplicação
 CMD ["npm", "start"]
