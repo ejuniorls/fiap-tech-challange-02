@@ -1,4 +1,4 @@
-name: Node.js CI/CD
+name: Node.js CI/CD Pipeline
 
 on:
   push:
@@ -12,32 +12,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      mongodb:
-        image: mongo:latest
-        ports:
-          - 27017:27017
-        options: >-
-          --health-cmd "mongo --eval 'db.runCommand({ ping: 1 })'" 
-          --health-interval=10s 
-          --health-timeout=5s 
-          --health-retries=5
-
     steps:
-    # Checkout the repository code
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - name: Checkout the repository
+      uses: actions/checkout@v2
 
-    # Setup Node.js
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v2
       with:
-        node-version: '20' # Use the Node.js version you're using for the project
+        node-version: '16'
 
-    # Install dependencies
     - name: Install dependencies
       run: npm install
 
-    # Run tests
     - name: Run tests
       run: npm test
+
+    - name: Build Docker image
+      run: docker build . -t tech-challenge-fase2-app
+
+    # Nova etapa: Instalar Docker Compose
+    - name: Install Docker Compose
+      run: sudo apt-get install docker-compose -y
+
+    # Rodar Docker Compose
+    - name: Run Docker Compose
+      run: docker-compose up --build -d
