@@ -52,9 +52,9 @@ cd fiap-tech-challange-02
 ```
 docker-compose --env-file .env.production build && docker-compose --env-file .env.production up -d
 ```
-Para encerrar o container:
+Para pausar o container:
 ```
-docker-compose down
+docker down <meu_container>
 ```
 
 4. Acessar a API:
