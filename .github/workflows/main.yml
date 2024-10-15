@@ -1,33 +1,55 @@
-name: Node.js CI
+name: Node.js REST API CI/CD
 
-# Define quando o workflow será acionado
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
-    runs-on: node:alpine
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: > 
+          --health-cmd "mongosh --eval 'db.runCommand({ ping: 1 })'" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=5
 
     steps:
-      # Checa o repositório
-      - name: Checkout repository
+      # Step 1: Checkout the repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      # Configura a versão do Node.js
+      # Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18.x'
 
-      # Instala as dependências
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Executa os testes
+      # Step 4: Run tests
       - name: Run tests
+        env:
+          MONGO_URL: mongodb://localhost:27017/testdb
         run: npm test
+
+  # Deploy job (Optional, modify if you use any specific cloud platform like Heroku, AWS, etc.)
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Additional steps to deploy your app go here (e.g., Heroku, AWS, etc.)
