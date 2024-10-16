@@ -28,7 +28,7 @@ describe('Author API', () => {
 
     it('deve criar um novo autor', async () => {
         const res = await request(app)
-            .post('/authors')
+            .post('/api/autores')
             .send({
                 name: 'Ana Maria',
                 email: 'ana_maria@email.com'
@@ -40,7 +40,7 @@ describe('Author API', () => {
     });
 
     it('deve listar todos os autores', async () => {
-        const res = await request(app).get('/authors');
+        const res = await request(app).get('/api/autores');
         expect(res.statusCode).toEqual(200);
         expect(Array.isArray(res.body)).toBe(true);
     });
@@ -49,7 +49,7 @@ describe('Author API', () => {
         const author = new Author({ name: 'Ana Maria', email: 'ana_maria@email.com' });
         await author.save();
 
-        const res = await request(app).get(`/authors/${author._id}`);
+        const res = await request(app).get(`/api/autores/${author._id}`);
         expect(res.statusCode).toEqual(200);
         expect(res.body.name).toBe('Ana Maria');
     });
@@ -59,7 +59,7 @@ describe('Author API', () => {
         await author.save();
 
         const res = await request(app)
-            .put(`/authors/${author._id}`)
+            .put(`/api/autores/${author._id}`)
             .send({ name: 'Nome atualizado', email: 'ana_maria_atualizado@email.com' });
 
         expect(res.statusCode).toEqual(200);
@@ -70,7 +70,7 @@ describe('Author API', () => {
         const author = new Author({ name: 'Ana Maria', email: 'ana_maria@email.com' });
         await author.save();
 
-        const res = await request(app).delete(`/authors/${author._id}`);
+        const res = await request(app).delete(`/api/autores/${author._id}`);
         expect(res.statusCode).toEqual(200);
         expect(res.body.message).toBe('Autor deletado com sucesso');
     });
@@ -81,7 +81,7 @@ describe('Author API', () => {
         await author1.save();
         await author2.save();
 
-        const res = await request(app).get('/authors/search/Ana');
+        const res = await request(app).get('/api/autores/busca/Ana');
         expect(res.statusCode).toEqual(200);
         expect(res.body.length).toBe(1);
     });

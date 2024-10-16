@@ -14,9 +14,9 @@ router.get('/', function (req, res, next) {
 router.use('/doc', swaggerRouter);
 
 // Rotas de autores
-router.use('/authors', authorsRouter);
+router.use('/api/autores', authorsRouter);
 
 // Rotas de posts
-router.use('/posts', postsRouter);
+router.use('/api/posts', postsRouter);
 
 module.exports = router;

@@ -12,7 +12,7 @@ router.get('/', postController.getPosts);
 router.get('/:id', postController.getPostById);
 
 // Rota para buscar post por palavra
-router.get('/search/:word', postController.searchPost);
+router.get('/busca/:palavra', postController.searchPost);
 
 // Rota para atualizar um post
 router.put('/:id', postController.updatePost);

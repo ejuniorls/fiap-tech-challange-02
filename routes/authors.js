@@ -12,7 +12,7 @@ router.get('/', authorController.getAuthors);
 router.get('/:id', authorController.getAuthorById);
 
 // Rota para buscar autor por palavra
-router.get('/search/:word', authorController.searchAuthor);
+router.get('/busca/:palavra', authorController.searchAuthor);
 
 // Rota para atualizar um autor
 router.put('/:id', authorController.updateAuthor);

@@ -2,10 +2,10 @@ const Author = require('../models/Author');
 
 /**
  * @swagger
- * /authors:
+ * /api/autores:
  *   post:
  *     summary: Criar um novo autor
- *     tags: [Authors]
+ *     tags: [Autores]
  *     requestBody:
  *       required: true
  *       content:
@@ -35,10 +35,10 @@ exports.createAuthor = async (req, res) => {
 
 /**
  * @swagger
- * /authors:
+ * /api/autores:
  *   get:
  *     summary: Listar todos os autores
- *     tags: [Authors]
+ *     tags: [Autores]
  *     responses:
  *       200:
  *         description: Lista de autores
@@ -67,10 +67,10 @@ exports.getAuthors = async (req, res) => {
 
 /**
  * @swagger
- * /authors/{id}:
+ * /api/autores/{id}:
  *   get:
  *     summary: Obter um autor pelo ID
- *     tags: [Authors]
+ *     tags: [Autores]
  *     parameters:
  *       - in: path
  *         name: id
@@ -109,13 +109,13 @@ exports.getAuthorById = async (req, res) => {
 
 /**
  * @swagger
- * /authors/search/{word}:
+ * /api/autores/busca/{palavra}:
  *   get:
  *     summary: Obter autores por busca por palavra
- *     tags: [Authors]
+ *     tags: [Autores]
  *     parameters:
  *       - in: path
- *         name: word
+ *         name: palavra
  *         required: true
  *         description: busca por palavra
  *         schema:
@@ -141,8 +141,8 @@ exports.searchAuthor = async (req, res) => {
     try {
         const authors = await Author.find({
             $or: [
-                { name: { $regex: req.params.word, $options: 'i' } },
-                { email: { $regex: req.params.word, $options: 'i' } }
+                { name: { $regex: req.params.palavra, $options: 'i' } },
+                { email: { $regex: req.params.palavra, $options: 'i' } }
             ]
         });
         res.json(authors);
@@ -153,10 +153,10 @@ exports.searchAuthor = async (req, res) => {
 
 /**
  * @swagger
- * /authors/{id}:
+ * /api/autores/{id}:
  *   put:
  *     summary: Atualizar um autor pelo ID
- *     tags: [Authors]
+ *     tags: [Autores]
  *     parameters:
  *       - in: path
  *         name: id
@@ -197,10 +197,10 @@ exports.updateAuthor = async (req, res) => {
 
 /**
  * @swagger
- * /authors/{id}:
+ * /api/autores/{id}:
  *   delete:
  *     summary: Deletar um autor pelo ID
- *     tags: [Authors]
+ *     tags: [Autores]
  *     parameters:
  *       - in: path
  *         name: id

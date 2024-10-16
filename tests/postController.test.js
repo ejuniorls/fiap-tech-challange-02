@@ -36,7 +36,7 @@ describe('Post API', () => {
 
     it('deve criar um novo post', async () => {
         const res = await request(app)
-            .post('/posts')
+            .post('/api/posts')
             .send({
                 title: 'Teste Post',
                 content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -49,7 +49,7 @@ describe('Post API', () => {
     });
 
     it('deve listar todos os posts', async () => {
-        const res = await request(app).get('/posts');
+        const res = await request(app).get('/api/posts');
         expect(res.statusCode).toEqual(200);
         expect(Array.isArray(res.body)).toBe(true);
     });
@@ -58,7 +58,7 @@ describe('Post API', () => {
         const post = new Post({ title: 'Teste Post', content: 'Test content', author: authorId });
         await post.save();
 
-        const res = await request(app).get(`/posts/${post._id}`);
+        const res = await request(app).get(`/api/posts/${post._id}`);
         expect(res.statusCode).toEqual(200);
         expect(res.body.title).toBe('Teste Post');
     });
@@ -68,7 +68,7 @@ describe('Post API', () => {
         await post.save();
 
         const res = await request(app)
-            .put(`/posts/${post._id}`)
+            .put(`/api/posts/${post._id}`)
             .send({ title: 'Titulo atualizado', content: 'Conteudo atualizado' });
 
         expect(res.statusCode).toEqual(200);
@@ -79,7 +79,7 @@ describe('Post API', () => {
         const post = new Post({ title: 'Post para apagar', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', author: authorId });
         await post.save();
 
-        const res = await request(app).delete(`/posts/${post._id}`);
+        const res = await request(app).delete(`/api/posts/${post._id}`);
         expect(res.statusCode).toEqual(200);
         expect(res.body.message).toBe('Post deletado com sucesso');
     });
@@ -90,7 +90,7 @@ describe('Post API', () => {
         await post1.save();
         await post2.save();
 
-        const res = await request(app).get('/posts/search/conteudo');
+        const res = await request(app).get('/api/posts/busca/conteudo');
         expect(res.statusCode).toEqual(200);
         expect(res.body.length).toBe(2);
     });

@@ -2,7 +2,7 @@ const Post = require('../models/Post');
 
 /**
  * @swagger
- * /posts:
+ * /api/posts:
  *   post:
  *     summary: Criar um novo post
  *     tags: [Posts]
@@ -37,7 +37,7 @@ exports.createPost = async (req, res) => {
 
 /**
  * @swagger
- * /posts:
+ * /api/posts:
  *   get:
  *     summary: Listar todos os posts
  *     tags: [Posts]
@@ -71,7 +71,7 @@ exports.getPosts = async (req, res) => {
 
 /**
  * @swagger
- * /posts/{id}:
+ * /api/posts/{id}:
  *   get:
  *     summary: Obter um post pelo ID
  *     tags: [Posts]
@@ -115,13 +115,13 @@ exports.getPostById = async (req, res) => {
 
 /**
  * @swagger
- * /posts/search/{word}:
+ * /api/posts/busca/{palavra}:
  *   get:
  *     summary: Obter posts por busca por palavra
  *     tags: [Posts]
  *     parameters:
  *       - in: path
- *         name: word
+ *         name: palavra
  *         required: true
  *         description: busca por palavra
  *         schema:
@@ -149,8 +149,8 @@ exports.searchPost = async (req, res) => {
     try {
         const posts = await Post.find({
             $or: [
-                { title: { $regex: req.params.word, $options: 'i' } },
-                { content: { $regex: req.params.word, $options: 'i' } }
+                { title: { $regex: req.params.palavra, $options: 'i' } },
+                { content: { $regex: req.params.palavra, $options: 'i' } }
             ]
         });
         res.json(posts);
@@ -161,7 +161,7 @@ exports.searchPost = async (req, res) => {
 
 /**
  * @swagger
- * /posts/{id}:
+ * /api/posts/{id}:
  *   put:
  *     summary: Atualizar um post pelo ID
  *     tags: [Posts]
@@ -205,7 +205,7 @@ exports.updatePost = async (req, res) => {
 
 /**
  * @swagger
- * /posts/{id}:
+ * /api/posts/{id}:
  *   delete:
  *     summary: Deletar um post pelo ID
  *     tags: [Posts]

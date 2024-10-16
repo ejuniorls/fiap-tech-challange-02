@@ -1,15 +1,20 @@
+# Node.js do Docker Hub
 FROM node:alpine
 
-LABEL maintainer "William Tenório da Silva <contato@williamtenorio.com.br>"
+# Mantenedor
+LABEL org.opencontainers.image.authors="Edmir Lôbo ejuniorls@outlook.com>"
 
+# Define o diretório dentro do container
 WORKDIR /usr/src/app/
 
+# Copia os arquivos package.json e package-lock.json para o container
 COPY package*.json ./
 
-# RUN systemctl start mongod
-
+# Instala as dependências
 RUN npm install
 
+# Copia a aplicação para o container
 COPY . .
 
+# Comando para iniciar a aplicação
 CMD ["npm", "start"]
