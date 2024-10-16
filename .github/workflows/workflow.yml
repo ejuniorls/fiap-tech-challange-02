@@ -1,62 +1,77 @@
-name: CI/CD for Node.js REST API
+name: CI/CD Pipeline
 
+# Define quando o workflow deve ser executado
 on:
   push:
     branches:
-      - master  # O workflow será executado quando houver push na branch "master"
+      - master
   pull_request:
     branches:
       - master
 
 jobs:
+  # Job de CI (Integração Contínua)
   test:
     runs-on: ubuntu-latest
 
     services:
-      mongodb:
+      mongo:
         image: mongo:latest
         ports:
           - 27017:27017
-        options: --health-cmd="mongosh --eval 'db.runCommand({ ping: 1 })'" --health-interval=10s --health-timeout=5s --health-retries=5
+        options: --bind_ip_all
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      # Passo 1: Checa o código do repositório
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
+      # Passo 2: Configura o Node.js
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: '16' # Ou a versão do Node.js que sua aplicação usa
+          node-version: '18.x'  # Defina a versão do Node.js
 
+      # Passo 3: Instala as dependências
       - name: Install dependencies
         run: npm install
 
-      - name: Set environment variables
-        run: |
-          echo "MONGO_URI=mongodb://localhost:27017/testdb" >> $GITHUB_ENV
-          
+      # Passo 4: Espera o MongoDB inicializar
+      - name: Wait for MongoDB to start
+        run: sleep 15
+
+      # Passo 5: Executa os testes
       - name: Run tests
         run: npm test
 
+  # Job de CD (Entrega Contínua)
   deploy:
+    needs: test
     runs-on: ubuntu-latest
-    needs: test  # Só executa se o job de teste passar
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      # Passo 1: Checa o código do repositório
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
+      # Passo 2: Configura o Node.js
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '18.x'
 
+      # Passo 3: Instala as dependências
       - name: Install dependencies
         run: npm install
 
+      # Passo 4: Constrói a aplicação (se aplicável)
+      - name: Build project
+        run: npm run build
+
+      # Passo 5: Implementa a aplicação (exemplo usando Heroku)
       - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12 # Ou outra ação para deploy no seu serviço de hospedagem
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "nome-do-seu-app"
-          heroku_email: "seu-email@exemplo.com"
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}  # Use a chave de API do Heroku como segredo
+        run: |
+          git remote add heroku https://git.heroku.com/<seu-app>.git
+          git push heroku main
