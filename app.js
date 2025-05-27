@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
@@ -16,5 +18,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+
+const port = process.env.PORT;
+console.log(`Servidor rodando na porta ${port}`);
 
 module.exports = app;
