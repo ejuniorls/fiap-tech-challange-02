@@ -20,6 +20,6 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
 const port = process.env.PORT;
-console.log(`Servidor rodando na porta ${port}`);
+console.log(`servidor rodando na porta ${port}`);
 
 module.exports = app;
