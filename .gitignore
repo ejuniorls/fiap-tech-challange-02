@@ -56,9 +56,13 @@ typings/
 
 # dotenv environment variables file
 .env
+.env.test
+.env.development
 
 # next.js build output
 .next
 
 # ide
 .idea
+
+sequelize-cli

@@ -1,23 +1,51 @@
-require("dotenv").config();
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV || "development"}`,
+});
 
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 
-var app = express();
+// Swagger (apenas em desenvolvimento)
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./docs/swagger");
 
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+// Middleware de erro
+const errorHandler = require("./middlewares/errorHandler");
 
-// Centralizador de rotas
+const app = express();
+
+// Configurações básicas
+app.use([
+  logger(process.env.NODE_ENV === "production" ? "combined" : "dev"),
+  express.json(),
+  express.urlencoded({ extended: false }),
+  cookieParser(),
+  express.static(path.join(__dirname, "public")),
+]);
+
+// Swagger apenas em desenvolvimento
+if (process.env.NODE_ENV !== "production") {
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+}
+
+// Rotas
 const routes = require("./routes");
-app.use("/api", routes); // Todas as rotas começam com /api
+app.use("/api", routes);
 
-const port = process.env.PORT;
-console.log(`servidor rodando na porta ${port}`);
+// Middleware de erro
+app.use(errorHandler);
 
+// Exporta o app sem iniciar o servidor (para testes)
 module.exports = app;
+
+// Inicia o servidor apenas quando não for teste
+if (process.env.NODE_ENV !== "test" && require.main === module) {
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Ambiente: ${process.env.NODE_ENV || "development"}`);
+    console.log(`Servidor rodando na porta ${port}`);
+    console.log(`Banco de dados: ${process.env.DB_NAME}`);
+  });
+}
