@@ -15,7 +15,7 @@ describe("Testes de integração com banco de dados", () => {
 
     testRoleData = {
       name: "developer",
-      description: "developer desc"
+      description: "developer desc",
     };
 
     const res = await request(app).post("/api/roles").send(testRoleData);
@@ -50,7 +50,7 @@ describe("Testes de integração com banco de dados", () => {
       expect(response.body).toMatchObject({
         id: testRoleId,
         name: testRoleData.name,
-        description: testRoleData.description
+        description: testRoleData.description,
       });
     });
 
