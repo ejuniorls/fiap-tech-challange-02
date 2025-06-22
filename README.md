@@ -12,12 +12,12 @@ Um blog moderno desenvolvido para compartilhar artigos, tutoriais e reflexões s
 
 ## ✨ Funcionalidades
 
-- ✅ Listagem de posts com paginação  
-- ✅ Sistema de comentários [Disqus/outro]  
-- ✅ Pesquisa por artigos  
-- ✅ Tags/categorias para organização  
-- ✅ Modo claro/escuro  
-- ✅ Responsivo (mobile-friendly)  
+- ✅ Listagem de posts com paginação
+- ✅ Sistema de comentários [Disqus/outro]
+- ✅ Pesquisa por artigos
+- ✅ Tags/categorias para organização
+- ✅ Modo claro/escuro
+- ✅ Responsivo (mobile-friendly)
 
 ## 🛠️ Como Rodar Localmente
 
@@ -38,7 +38,9 @@ Siga os passos abaixo para executar o projeto no seu ambiente local.
    ```
 
 ## Licença
+
 Este projeto está sob a licença MIT.
 
---- 
+---
+
 Feito com ❤️ por Edmir Lôbo

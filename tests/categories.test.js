@@ -18,7 +18,9 @@ describe("Testes de integração com banco de dados", () => {
       description: "developer desc",
     };
 
-    const res = await request(app).post("/api/categories").send(testCategoryData);
+    const res = await request(app)
+      .post("/api/categories")
+      .send(testCategoryData);
 
     testCategoryId = res.body.id;
   });
