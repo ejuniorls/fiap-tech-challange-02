@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 const categoryRoutes = require("./categoryRoutes");
+const postRoutes = require("./postRoutes");
 const rolesRoutes = require("./roleRoutes");
 const usersRoutes = require("./userRoutes");
 const versionRoutes = require("./versionRoutes");
@@ -12,6 +13,7 @@ router.get("/", function (req, res) {
 });
 
 router.use("/categories", categoryRoutes);
+router.use("/posts", postRoutes);
 router.use("/roles", rolesRoutes);
 router.use("/users", usersRoutes);
 router.use("/version", versionRoutes);
