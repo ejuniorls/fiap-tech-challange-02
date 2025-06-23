@@ -18,7 +18,7 @@ describe("Testes de integração para Posts", () => {
       excerpt: "Aprenda os conceitos básicos de desenvolvimento web",
       content: "Conteúdo completo sobre programação web...",
       status: "published",
-      publishedAt: new Date()
+      publishedAt: new Date(),
     };
 
     const res = await request(app).post("/api/posts").send(testPostData);
@@ -37,7 +37,7 @@ describe("Testes de integração para Posts", () => {
       expect(response.body.length).toBe(1);
       expect(response.body[0]).toMatchObject({
         title: testPostData.title,
-        status: testPostData.status
+        status: testPostData.status,
       });
     });
 
@@ -54,7 +54,7 @@ describe("Testes de integração para Posts", () => {
         id: testPostId,
         title: testPostData.title,
         excerpt: testPostData.excerpt,
-        status: testPostData.status
+        status: testPostData.status,
       });
       expect(response.body.slug).toBeDefined();
     });
@@ -65,7 +65,7 @@ describe("Testes de integração para Posts", () => {
         excerpt: "As principais inovações tecnológicas",
         content: "Conteúdo completo sobre tendências...",
         status: "published",
-        publishedAt: new Date()
+        publishedAt: new Date(),
       };
 
       const response = await request(app)
@@ -75,7 +75,7 @@ describe("Testes de integração para Posts", () => {
 
       expect(response.body).toMatchObject({
         title: newPost.title,
-        status: newPost.status
+        status: newPost.status,
       });
       expect(response.body.slug).toBeDefined();
 
@@ -85,7 +85,7 @@ describe("Testes de integração para Posts", () => {
         .expect(200);
       expect(getResponse.body).toMatchObject({
         title: newPost.title,
-        excerpt: newPost.excerpt
+        excerpt: newPost.excerpt,
       });
     });
 
@@ -94,13 +94,10 @@ describe("Testes de integração para Posts", () => {
         title: "", // Título vazio
         excerpt: "Excerpt válido",
         content: "Conteúdo válido",
-        status: "published"
+        status: "published",
       };
 
-      await request(app)
-        .post("/api/posts")
-        .send(invalidPost)
-        .expect(500);
+      await request(app).post("/api/posts").send(invalidPost).expect(500);
     });
   });
 
@@ -108,7 +105,7 @@ describe("Testes de integração para Posts", () => {
     it("PUT /api/posts/:id - deve atualizar um post existente", async () => {
       const updatedData = {
         title: "Introdução à Programação Web Moderna",
-        status: "archived"
+        status: "archived",
       };
 
       const response = await request(app)
@@ -119,7 +116,9 @@ describe("Testes de integração para Posts", () => {
       expect(response.body).toMatchObject(updatedData);
 
       // Verifica se o slug foi atualizado
-      expect(response.body.slug).toContain("introducao-a-programacao-web-moderna");
+      expect(response.body.slug).toContain(
+        "introducao-a-programacao-web-moderna",
+      );
 
       // Verifica se a atualização persistiu
       const getResponse = await request(app)
@@ -155,7 +154,7 @@ describe("Testes de integração para Posts", () => {
           title: `Post Temporário ${Date.now()}`,
           excerpt: `Excerpt temporário ${Date.now()}`,
           content: "Conteúdo temporário",
-          status: "draft"
+          status: "draft",
         });
       tempPostId = res.body.id;
     });
@@ -171,10 +170,8 @@ describe("Testes de integração para Posts", () => {
       expect(deletedPost.deletedAt).not.toBeNull();
 
       // Verifica que não aparece mais na listagem normal
-      const getResponse = await request(app)
-        .get("/api/posts")
-        .expect(200);
-      expect(getResponse.body.some(p => p.id === tempPostId)).toBe(false);
+      const getResponse = await request(app).get("/api/posts").expect(200);
+      expect(getResponse.body.some((p) => p.id === tempPostId)).toBe(false);
     });
 
     it("DELETE /api/posts/:id - deve retornar 404 para post já removido", async () => {
@@ -200,10 +197,8 @@ describe("Testes de integração para Posts", () => {
       await request(app).get(`/api/posts/${tempPostId}`).expect(200);
 
       // Verifica que aparece na listagem normal
-      const getResponse = await request(app)
-        .get("/api/posts")
-        .expect(200);
-      expect(getResponse.body.some(p => p.id === tempPostId)).toBe(true);
+      const getResponse = await request(app).get("/api/posts").expect(200);
+      expect(getResponse.body.some((p) => p.id === tempPostId)).toBe(true);
     });
 
     it("POST /api/posts/:id/restore - deve retornar 404 para post inexistente", async () => {

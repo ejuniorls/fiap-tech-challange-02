@@ -1,18 +1,18 @@
 /* eslint-disable no-unused-vars */
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('posts', {
+    await queryInterface.createTable("posts", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       title: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       slug: {
         allowNull: false,
@@ -20,19 +20,19 @@ module.exports = {
       },
       excerpt: {
         allowNull: false,
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       content: {
         allowNull: false,
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       status: {
-        type: Sequelize.ENUM('draft', 'published', 'archived'), // Valores definidos aqui
-        defaultValue: 'draft', // Valor padrão adicionado
-        allowNull: false
+        type: Sequelize.ENUM("draft", "published", "archived"), // Valores definidos aqui
+        defaultValue: "draft", // Valor padrão adicionado
+        allowNull: false,
       },
       published_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       created_at: {
         allowNull: false,
@@ -51,6 +51,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('posts');
-  }
+    await queryInterface.dropTable("posts");
+  },
 };
