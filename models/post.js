@@ -16,10 +16,26 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
-    excerpt: DataTypes.TEXT,
-    content: DataTypes.TEXT,
-    status: DataTypes.ENUM,
-    publishedAt: DataTypes.DATE
+    excerpt: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        len: {
+          args: [0, 500],
+          msg: "excerpt cannot exceed 500 characters",
+        },
+      },
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    status: {
+      type: DataTypes.ENUM('draft', 'published', 'archived'), // Valores definidos aqui
+      allowNull: false,
+      defaultValue: 'draft' // Valor padrão adicionado
+    },
+    published_at: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Post',

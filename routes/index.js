@@ -3,6 +3,7 @@ var router = express.Router();
 
 const usersRoutes = require("./userRoutes");
 const rolesRoutes = require("./roleRoutes");
+const postRoutes = require("./postRoutes");
 const versionRoutes = require("./versionRoutes");
 
 /* GET home page. */
@@ -11,6 +12,7 @@ router.get("/", function (req, res) {
 });
 
 router.use("/users", usersRoutes);
+router.use("/posts", postRoutes);
 router.use("/roles", rolesRoutes);
 router.use("/version", versionRoutes);
 

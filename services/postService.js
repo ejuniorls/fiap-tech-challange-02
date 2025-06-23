@@ -1,7 +1,11 @@
 const { Post } = require("../models");
+const { generateUniqueSlug } = require("../utils/slug");
 
 class PostService {
   async create(data) {
+    // Gera o slug único a partir do nome
+    data.slug = await generateUniqueSlug(Post, data.title);
+
     return await Post.create(data);
   }
 
@@ -19,6 +23,11 @@ class PostService {
       const notFoundError = new Error("Post não encontrado");
       notFoundError.statusCode = 404;
       throw notFoundError;
+    }
+
+    // Atualiza apenas o slug se o username foi modificado
+    if (data.title) {
+      data.slug = await generateUniqueSlug(Post, data.title);
     }
 
     return await post.update(data);

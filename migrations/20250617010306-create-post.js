@@ -27,7 +27,9 @@ module.exports = {
         type: Sequelize.TEXT
       },
       status: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM('draft', 'published', 'archived'), // Valores definidos aqui
+        defaultValue: 'draft', // Valor padrão adicionado
+        allowNull: false
       },
       published_at: {
         type: Sequelize.DATE
