@@ -1,19 +1,19 @@
-# FIAP Tech Challange 02
+# FIAP Tech Challenge 02
 
-Um blog moderno desenvolvido para compartilhar artigos, tutoriais e reflexões sobre [insira o tema principal do blog, ex: tecnologia, programação, lifestyle, etc.].
+Um blog moderno desenvolvido para compartilhar artigos, tutoriais e reflexões sobre tecnologia, programação e lifestyle.
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Frontend**: [React.js/Vue.js/Angular/HTML/CSS/JavaScript]
-- **Backend**: [Node.js/Django/Ruby on Rails/PHP/outro]
-- **Banco de Dados**: [MySQL/PostgreSQL/MongoDB/SQLite]
-- **Hospedagem**: [Vercel/Netlify/Heroku/GitHub Pages/outro]
-- **Outras Ferramentas**: [Git, ESLint, Webpack, etc.]
+- **Frontend**: React.js, Vue.js, Angular, HTML, CSS, JavaScript
+- **Backend**: Node.js, Django, Ruby on Rails, PHP
+- **Banco de Dados**: MySQL, PostgreSQL, MongoDB, SQLite
+- **Hospedagem**: Vercel, Netlify, Heroku, GitHub Pages
+- **Outras Ferramentas**: Git, ESLint, Webpack
 
 ## ✨ Funcionalidades
 
 - ✅ Listagem de posts com paginação
-- ✅ Sistema de comentários [Disqus/outro]
+- ✅ Sistema de comentários (Disqus)
 - ✅ Pesquisa por artigos
 - ✅ Tags/categorias para organização
 - ✅ Modo claro/escuro
@@ -35,7 +35,6 @@ Siga os passos abaixo para executar o projeto no seu ambiente local.
    ```bash
    git clone https://github.com/ejuniorls/fiap-tech-challange-02
    cd fiap-tech-challange-02
-   ```
 
 ## Licença
 
