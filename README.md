@@ -42,4 +42,4 @@ Este projeto está sob a licença MIT.
 
 ---
 
-Feito com ❤️ por Edmir Lôbo
+Feito com ❤️ por Edmir Lôbo Jr
