@@ -47,4 +47,24 @@ module.exports = {
       return res.status(404).json({ error: error.message });
     }
   },
+
+  async listWithRoles(req, res, next) {
+    try {
+      const users = await userService.findAllWithRoles();
+      res.json(users);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async showWithRoles(req, res, next) {
+    try {
+      const user = await userService.findByIdWithRoles(req.params.id);
+      if (!user)
+        return res.status(404).json({ error: "Usuário não encontrado" });
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  },
 };

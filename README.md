@@ -35,6 +35,7 @@ Siga os passos abaixo para executar o projeto no seu ambiente local.
    ```bash
    git clone https://github.com/ejuniorls/fiap-tech-challange-02
    cd fiap-tech-challange-02
+   ```
 
 ## Licença
 
