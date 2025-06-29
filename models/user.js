@@ -6,6 +6,12 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       // define association here
+      User.belongsToMany(models.Role, {
+        through: models.UserRole,
+        foreignKey: "user_id",
+        otherKey: "role_id",
+        as: "roles",
+      });
     }
 
     // Método para garantir que a senha nunca seja retornada

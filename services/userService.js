@@ -23,6 +23,30 @@ class UserService extends BaseService {
     }
     return super.update(id, data);
   }
+
+  async findAllWithRoles() {
+    return await User.findAll({
+      include: [
+        {
+          association: "roles",
+          attributes: ["id", "name", "description"],
+          through: { attributes: [] },
+        },
+      ],
+    });
+  }
+
+  async findByIdWithRoles(id) {
+    return await User.findByPk(id, {
+      include: [
+        {
+          association: "roles",
+          attributes: ["id", "name", "description"],
+          through: { attributes: [] },
+        },
+      ],
+    });
+  }
 }
 
 module.exports = new UserService();

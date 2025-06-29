@@ -24,6 +24,18 @@ router.get("/", userController.index);
 
 /**
  * @swagger
+ * /users/with-roles:
+ *   get:
+ *     summary: Lista todos os usuários com suas roles
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Lista de usuários com suas roles
+ */
+router.get("/with-roles", userController.listWithRoles);
+
+/**
+ * @swagger
  * /users/{id}:
  *   get:
  *     summary: Obtém um usuário pelo ID
@@ -41,6 +53,26 @@ router.get("/", userController.index);
  *         description: Usuário não encontrado
  */
 router.get("/:id", userController.show);
+
+/**
+ * @swagger
+ * /users/{id}/with-roles:
+ *   get:
+ *     summary: Obtém um usuário com as roles pelo ID
+ *     tags: [Users]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Usuário com suas roles
+ *       404:
+ *         description: Usuário não encontrado
+ */
+router.get("/:id/with-roles", userController.showWithRoles);
 
 /**
  * @swagger

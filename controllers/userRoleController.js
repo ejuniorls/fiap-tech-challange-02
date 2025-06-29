@@ -10,55 +10,54 @@ module.exports = {
     }
   },
 
-  async getUserRoles(req, res) {
+  async showByUser(req, res) {
     try {
-      const roles = await userRoleService.findByUserId(req.params.userId);
-      if (!roles) {
-        return res.status(404).json({ error: "Usuário não encontrado ou sem roles atribuídos" });
-      }
-      res.json(roles);
+      const userRoles = await userRoleService.findByUserId(req.params.userId);
+      res.json(userRoles);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   },
 
-  async assignRole(req, res) {
+  async showByRole(req, res) {
     try {
-      const { userId, roleId } = req.body;
-      const userRole = await userRoleService.assignRole(userId, roleId);
+      const userRoles = await userRoleService.findByRoleId(req.params.roleId);
+      res.json(userRoles);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  async store(req, res) {
+    try {
+      const { userId, roleId } = req.params;
+
+      // Verifica se a relação já existe
+      const exists = await userRoleService.exists(userId, roleId);
+      if (exists) {
+        return res
+          .status(400)
+          .json({ error: "This user already has this role" });
+      }
+
+      const userRole = await userRoleService.create({
+        user_id: userId,
+        role_id: roleId,
+      });
+
       res.status(201).json(userRole);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
   },
 
-  async updateUserRoles(req, res) {
+  async destroy(req, res) {
     try {
-      const { userId } = req.params;
-      const { roleIds } = req.body;
-      const updatedRoles = await userRoleService.updateUserRoles(userId, roleIds);
-      res.json(updatedRoles);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },
-
-  async removeRole(req, res) {
-    try {
-      const { userId, roleId } = req.body;
-      await userRoleService.removeRole(userId, roleId);
+      const { userId, roleId } = req.params;
+      await userRoleService.delete(userId, roleId);
       res.status(204).send();
     } catch (error) {
       res.status(404).json({ error: error.message });
     }
   },
-
-  async getRoleUsers(req, res) {
-    try {
-      const users = await userRoleService.findUsersByRoleId(req.params.roleId);
-      res.json(users);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  }
 };
