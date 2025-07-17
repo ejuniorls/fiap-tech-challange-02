@@ -55,6 +55,7 @@ module.exports = {
 };
 
 // Log informativo (opcional)
-console.log(`\n⚙️  Ambiente carregado: ${env}`);
-console.log(`📦 Database: ${module.exports[env].database}`);
-console.log(`🌐 Host: ${module.exports[env].host}\n`);
+console.log(`\n`);
+console.log(`⚙️ Ambiente carregado:\t ${env}`);
+console.log(`📦 Database:\t\t ${module.exports[env].database}`);
+console.log(`🌐 Host:\t\t ${module.exports[env].host}\n`);
