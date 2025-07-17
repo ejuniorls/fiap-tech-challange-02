@@ -1,169 +1,261 @@
 var express = require("express");
 var router = express.Router();
 const userController = require("../controllers/userController");
+const authMiddleware = require('../middlewares/auth.middleware');
 const validateUser = require("../middlewares/validateUser");
 
 /**
  * @swagger
  * tags:
  *   name: Users
- *   description: Gerenciamento de usuários
+ *   description: User management endpoints
+ */
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  */
 
 /**
  * @swagger
  * /users:
  *   get:
- *     summary: Lista todos os usuários
+ *     summary: List all users
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Lista de usuários
+ *         description: A list of users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized - Bearer token missing or invalid
+ *       500:
+ *         description: Internal server error
  */
-router.get("/", userController.index);
+router.get("/", authMiddleware.authenticate, userController.index);
 
 /**
  * @swagger
  * /users/with-roles:
  *   get:
- *     summary: Lista todos os usuários com suas roles
+ *     summary: List all users with their roles
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Lista de usuários com suas roles
+ *         description: A list of users with their roles
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/UserWithRoles'
+ *       401:
+ *         description: Unauthorized - Bearer token missing or invalid
+ *       500:
+ *         description: Internal server error
  */
-router.get("/with-roles", userController.listWithRoles);
+router.get("/with-roles", authMiddleware.authenticate, userController.listWithRoles);
 
 /**
  * @swagger
  * /users/{id}:
  *   get:
- *     summary: Obtém um usuário pelo ID
+ *     summary: Get a user by ID
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - name: id
- *         in: path
+ *       - in: path
+ *         name: id
  *         required: true
  *         schema:
  *           type: integer
+ *         description: User ID
  *     responses:
  *       200:
- *         description: Usuário encontrado
+ *         description: User found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized - Bearer token missing or invalid
  *       404:
- *         description: Usuário não encontrado
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
  */
-router.get("/:id", userController.show);
+router.get("/:id", authMiddleware.authenticate, userController.show);
 
 /**
  * @swagger
  * /users/{id}/with-roles:
  *   get:
- *     summary: Obtém um usuário com as roles pelo ID
+ *     summary: Get a user with roles by ID
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - name: id
- *         in: path
+ *       - in: path
+ *         name: id
  *         required: true
  *         schema:
  *           type: integer
+ *         description: User ID
  *     responses:
  *       200:
- *         description: Usuário com suas roles
+ *         description: User with roles found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserWithRoles'
+ *       401:
+ *         description: Unauthorized - Bearer token missing or invalid
  *       404:
- *         description: Usuário não encontrado
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
  */
-router.get("/:id/with-roles", userController.showWithRoles);
+router.get("/:id/with-roles", authMiddleware.authenticate, userController.showWithRoles);
 
 /**
  * @swagger
  * /users:
  *   post:
- *     summary: Cria um novo usuário
+ *     summary: Create a new user
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
+ *             $ref: '#/components/schemas/NewUser'
  *     responses:
  *       201:
- *         description: Usuário criado
+ *         description: User created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Invalid input data
+ *       401:
+ *         description: Unauthorized - Bearer token missing or invalid
+ *       500:
+ *         description: Internal server error
  */
-router.post("/", validateUser, userController.store);
+router.post("/", authMiddleware.authenticate, validateUser, userController.store);
 
 /**
  * @swagger
  * /users/{id}:
  *   put:
- *     summary: Atualiza um usuário
+ *     summary: Update a user
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - name: id
- *         in: path
+ *       - in: path
+ *         name: id
  *         required: true
  *         schema:
  *           type: integer
+ *         description: User ID
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
+ *             $ref: '#/components/schemas/UpdateUser'
  *     responses:
  *       200:
- *         description: Usuário atualizado
+ *         description: User updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Invalid input data
+ *       401:
+ *         description: Unauthorized - Bearer token missing or invalid
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
  */
-router.put("/:id", validateUser, userController.update);
+router.put("/:id", authMiddleware.authenticate, validateUser, userController.update);
 
 /**
  * @swagger
  * /users/{id}:
  *   delete:
- *     summary: Deleta um usuário
+ *     summary: Delete a user (soft delete)
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - name: id
- *         in: path
+ *       - in: path
+ *         name: id
  *         required: true
  *         schema:
  *           type: integer
+ *         description: User ID
  *     responses:
  *       204:
- *         description: Usuário deletado
+ *         description: User deleted successfully
+ *       401:
+ *         description: Unauthorized - Bearer token missing or invalid
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
  */
-router.delete("/:id", userController.destroy);
+router.delete("/:id", authMiddleware.authenticate, userController.destroy);
 
 /**
  * @swagger
  * /users/{id}/restore:
  *   post:
- *     summary: Restaura um usuário deletado (soft delete)
+ *     summary: Restore a soft-deleted user
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - name: id
- *         in: path
+ *       - in: path
+ *         name: id
  *         required: true
  *         schema:
  *           type: integer
+ *         description: User ID
  *     responses:
  *       200:
- *         description: Usuário restaurado
+ *         description: User restored successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized - Bearer token missing or invalid
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
  */
-router.post("/:id/restore", userController.restore);
+router.post("/:id/restore", authMiddleware.authenticate, userController.restore);
 
 module.exports = router;

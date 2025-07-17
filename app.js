@@ -34,6 +34,13 @@ if (process.env.NODE_ENV !== "production") {
 const routes = require("./routes");
 app.use("/api", routes);
 
+// JSON cru para importar no Postman
+app.get("/api-docs.json", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.send(swaggerSpec);
+});
+
+
 // Middleware de erro
 app.use(errorHandler);
 

@@ -1,6 +1,7 @@
 const { User } = require("../models");
 const { generateUniqueSlug } = require("../utils/slug");
 const hashPassword = require("../utils/hashPassword");
+const bcrypt = require('bcryptjs'); // Adicione esta linha
 const BaseService = require("./BaseService");
 
 class UserService extends BaseService {
@@ -46,6 +47,45 @@ class UserService extends BaseService {
         },
       ],
     });
+  }
+
+  async findByEmail(email) {
+    try {
+      const user = await this.model.scope('withPassword').findOne({
+        where: {
+          email,
+          deleted_at: null
+        }
+      });
+
+      if (!user) {
+        console.log('Usuário não encontrado para o email:', email);
+        return null;
+      }
+
+      console.log('Usuário encontrado:', user.toJSON());
+      return user;
+
+    } catch (error) {
+      console.error('Erro ao buscar usuário por email:', error);
+      throw error;
+    }
+  }
+
+  async verifyPassword(user, password) {
+    try {
+      if (!user || !user.password) {
+        throw new Error('Objeto de usuário inválido ou senha não definida');
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password);
+      console.log('Resultado da comparação de senha:', isMatch);
+      return isMatch;
+
+    } catch (error) {
+      console.error('Erro ao verificar senha:', error);
+      throw error;
+    }
   }
 }
 

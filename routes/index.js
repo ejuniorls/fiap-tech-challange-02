@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
+const authRoutes = require("./authRoutes");
 const categoryRoutes = require("./categoryRoutes");
 const postRoutes = require("./postRoutes");
 const rolesRoutes = require("./roleRoutes");
@@ -14,6 +15,7 @@ router.get("/", function (req, res) {
   res.status(200).json({ msg: "api blog educacional v0.1" });
 });
 
+router.use("/auth", authRoutes);
 router.use("/categories", categoryRoutes);
 router.use("/posts", postRoutes);
 router.use("/roles", rolesRoutes);
