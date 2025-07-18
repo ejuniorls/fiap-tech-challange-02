@@ -1,4 +1,4 @@
-const roleService = require("../services/roleService");
+const roleService = require("../services/role.service");
 
 module.exports = {
   async index(req, res) {

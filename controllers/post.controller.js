@@ -1,4 +1,4 @@
-const postService = require("../services/postService");
+const postService = require("../services/post.service");
 
 module.exports = {
   async index(req, res) {

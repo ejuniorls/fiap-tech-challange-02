@@ -2,8 +2,8 @@
 "use strict";
 
 const { User } = require("../models");
-const { generateUniqueSlug } = require("../utils/slug");
-const hashPassword = require("../utils/hashPassword");
+const { generateUniqueSlug } = require("../utils/slug-generator.util");
+const hashPassword = require("../utils/password-hash.util");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

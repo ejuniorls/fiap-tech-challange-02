@@ -26,7 +26,7 @@ Siga os passos abaixo para executar o projeto no seu ambiente local.
 ### Pré-requisitos
 
 - [Node.js](https://nodejs.org/) (v14 ou superior)
-- [Yarn](https://yarnpkg.com/) ou [npm](https://www.npmjs.com/)
+- [npm](https://www.npmjs.com/)
 - [Git](https://git-scm.com/)
 
 ### Instalação
@@ -36,6 +36,9 @@ Siga os passos abaixo para executar o projeto no seu ambiente local.
    git clone https://github.com/ejuniorls/fiap-tech-challange-02
    cd fiap-tech-challange-02
    ```
+2. Copie o arquivo `.env.example` e renomeie para `.env` e preencha as variáveis de ambiente.
+
+3. Crie uma database com o nome definido no arquivo `.env` em `DB_NAME`.
 
 ## Licença
 

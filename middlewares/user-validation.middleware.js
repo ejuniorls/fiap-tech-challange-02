@@ -1,4 +1,3 @@
-// middlewares/validateUser.js
 module.exports = (req, res, next) => {
   const { method, body } = req;
 

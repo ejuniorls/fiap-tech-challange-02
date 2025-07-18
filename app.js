@@ -12,7 +12,7 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./docs/swagger");
 
 // Middleware de erro
-const errorHandler = require("./middlewares/errorHandler");
+const errorHandler = require("./middlewares/error-handler.middleware");
 
 const app = express();
 
@@ -31,7 +31,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 // Rotas
-const routes = require("./routes");
+const routes = require("./routes/index.routes");
 app.use("/api", routes);
 
 // JSON cru para importar no Postman
@@ -39,7 +39,6 @@ app.get("/api-docs.json", (req, res) => {
   res.setHeader("Content-Type", "application/json");
   res.send(swaggerSpec);
 });
-
 
 // Middleware de erro
 app.use(errorHandler);

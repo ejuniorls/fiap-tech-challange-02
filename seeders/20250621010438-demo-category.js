@@ -2,7 +2,7 @@
 "use strict";
 
 const { Category } = require("../models");
-const { generateUniqueSlug } = require("../utils/slug");
+const { generateUniqueSlug } = require("../utils/slug-generator.util");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
