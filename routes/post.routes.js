@@ -1,32 +1,32 @@
 var express = require("express");
 var router = express.Router();
-const tagController = require("../controllers/tagController");
+const postController = require("../controllers/post.controller");
 
 /**
  * @swagger
  * tags:
- *   name: Tags
- *   description: Gerenciamento de tags
+ *   name: Posts
+ *   description: Gerenciamento de posts
  */
 
 /**
  * @swagger
- * /tags:
+ * /posts:
  *   get:
- *     summary: Lista todos os tags
- *     tags: [Tags]
+ *     summary: Lista todos os posts
+ *     tags: [Posts]
  *     responses:
  *       200:
- *         description: Lista de tags
+ *         description: Lista de posts
  */
-router.get("/", tagController.index);
+router.get("/", postController.index);
 
 /**
  * @swagger
- * /tags/{id}:
+ * /posts/{id}:
  *   get:
- *     summary: Obtém um categoria pelo ID
- *     tags: [Tags]
+ *     summary: Obtém um post pelo ID
+ *     tags: [Posts]
  *     parameters:
  *       - name: id
  *         in: path
@@ -35,18 +35,18 @@ router.get("/", tagController.index);
  *           type: integer
  *     responses:
  *       200:
- *         description: Tag encontrado
+ *         description: Role encontrado
  *       404:
- *         description: Tag não encontrado
+ *         description: Role não encontrado
  */
-router.get("/:id", tagController.show);
+router.get("/:id", postController.show);
 
 /**
  * @swagger
- * /tags:
+ * /posts:
  *   post:
- *     summary: Cria um novo categoria
- *     tags: [Tags]
+ *     summary: Cria um novo post
+ *     tags: [Posts]
  *     requestBody:
  *       required: true
  *       content:
@@ -54,24 +54,22 @@ router.get("/:id", tagController.show);
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               name:
  *                 type: string
- *               email:
- *                 type: string
- *               password:
+ *               description:
  *                 type: string
  *     responses:
  *       201:
- *         description: Tag criado
+ *         description: Role criado
  */
-router.post("/", tagController.store);
+router.post("/", postController.store);
 
 /**
  * @swagger
- * /tags/{id}:
+ * /posts/{id}:
  *   put:
- *     summary: Atualiza um categoria
- *     tags: [Tags]
+ *     summary: Atualiza um post
+ *     tags: [Posts]
  *     parameters:
  *       - name: id
  *         in: path
@@ -85,24 +83,22 @@ router.post("/", tagController.store);
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               name:
  *                 type: string
- *               email:
- *                 type: string
- *               password:
+ *               description:
  *                 type: string
  *     responses:
  *       200:
- *         description: Tag atualizado
+ *         description: Role atualizado
  */
-router.put("/:id", tagController.update);
+router.put("/:id", postController.update);
 
 /**
  * @swagger
- * /tags/{id}:
+ * /posts/{id}:
  *   delete:
- *     summary: Deleta um categoria
- *     tags: [Tags]
+ *     summary: Deleta um post
+ *     tags: [Posts]
  *     parameters:
  *       - name: id
  *         in: path
@@ -111,16 +107,16 @@ router.put("/:id", tagController.update);
  *           type: integer
  *     responses:
  *       204:
- *         description: Tag deletado
+ *         description: Role deletado
  */
-router.delete("/:id", tagController.destroy);
+router.delete("/:id", postController.destroy);
 
 /**
  * @swagger
- * /tags/{id}/restore:
+ * /posts/{id}/restore:
  *   post:
- *     summary: Restaura um categoria deletado (soft delete)
- *     tags: [Tags]
+ *     summary: Restaura um post deletado (soft delete)
+ *     tags: [Posts]
  *     parameters:
  *       - name: id
  *         in: path
@@ -129,8 +125,8 @@ router.delete("/:id", tagController.destroy);
  *           type: integer
  *     responses:
  *       200:
- *         description: Tag restaurado
+ *         description: Role restaurado
  */
-router.post("/:id/restore", tagController.restore);
+router.post("/:id/restore", postController.restore);
 
 module.exports = router;

@@ -1,8 +1,8 @@
 const { User } = require("../models");
-const { generateUniqueSlug } = require("../utils/slug");
-const hashPassword = require("../utils/hashPassword");
-const bcrypt = require('bcryptjs'); // Adicione esta linha
-const BaseService = require("./BaseService");
+const { generateUniqueSlug } = require("../utils/slug-generator.util");
+const hashPassword = require("../utils/password-hash.util");
+const bcrypt = require("bcryptjs"); // Adicione esta linha
+const BaseService = require("./base.service");
 
 class UserService extends BaseService {
   constructor() {
@@ -51,23 +51,22 @@ class UserService extends BaseService {
 
   async findByEmail(email) {
     try {
-      const user = await this.model.scope('withPassword').findOne({
+      const user = await this.model.scope("withPassword").findOne({
         where: {
           email,
-          deleted_at: null
-        }
+          deleted_at: null,
+        },
       });
 
       if (!user) {
-        console.log('Usuário não encontrado para o email:', email);
+        console.log("Usuário não encontrado para o email:", email);
         return null;
       }
 
-      console.log('Usuário encontrado:', user.toJSON());
+      console.log("Usuário encontrado:", user.toJSON());
       return user;
-
     } catch (error) {
-      console.error('Erro ao buscar usuário por email:', error);
+      console.error("Erro ao buscar usuário por email:", error);
       throw error;
     }
   }
@@ -75,15 +74,14 @@ class UserService extends BaseService {
   async verifyPassword(user, password) {
     try {
       if (!user || !user.password) {
-        throw new Error('Objeto de usuário inválido ou senha não definida');
+        throw new Error("Objeto de usuário inválido ou senha não definida");
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
-      console.log('Resultado da comparação de senha:', isMatch);
+      console.log("Resultado da comparação de senha:", isMatch);
       return isMatch;
-
     } catch (error) {
-      console.error('Erro ao verificar senha:', error);
+      console.error("Erro ao verificar senha:", error);
       throw error;
     }
   }

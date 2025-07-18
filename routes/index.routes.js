@@ -1,14 +1,14 @@
 var express = require("express");
 var router = express.Router();
 
-const authRoutes = require("./authRoutes");
-const categoryRoutes = require("./categoryRoutes");
-const postRoutes = require("./postRoutes");
-const rolesRoutes = require("./roleRoutes");
-const tagRoutes = require("./tagRoutes");
-const userRoleRoutes = require("./userRoleRoutes");
-const usersRoutes = require("./userRoutes");
-const versionRoutes = require("./versionRoutes");
+const authRoutes = require("./auth.routes");
+const categoryRoutes = require("./category.routes");
+const postRoutes = require("./post.routes");
+const rolesRoutes = require("./role.routes");
+const tagRoutes = require("./tag.routes");
+const userRoleRoutes = require("./user-role.routes");
+const usersRoutes = require("./user.routes");
+const versionRoutes = require("./version.routes");
 
 /* GET home page. */
 router.get("/", function (req, res) {

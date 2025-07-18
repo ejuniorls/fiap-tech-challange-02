@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
-const userController = require("../controllers/userController");
-const authMiddleware = require('../middlewares/auth.middleware');
-const validateUser = require("../middlewares/validateUser");
+const userController = require("../controllers/user.controller");
+const authMiddleware = require("../middlewares/jwt-auth.middleware");
+const validateUser = require("../middlewares/user-validation.middleware");
 
 /**
  * @swagger
@@ -67,7 +67,11 @@ router.get("/", authMiddleware.authenticate, userController.index);
  *       500:
  *         description: Internal server error
  */
-router.get("/with-roles", authMiddleware.authenticate, userController.listWithRoles);
+router.get(
+  "/with-roles",
+  authMiddleware.authenticate,
+  userController.listWithRoles,
+);
 
 /**
  * @swagger
@@ -129,7 +133,11 @@ router.get("/:id", authMiddleware.authenticate, userController.show);
  *       500:
  *         description: Internal server error
  */
-router.get("/:id/with-roles", authMiddleware.authenticate, userController.showWithRoles);
+router.get(
+  "/:id/with-roles",
+  authMiddleware.authenticate,
+  userController.showWithRoles,
+);
 
 /**
  * @swagger
@@ -159,7 +167,12 @@ router.get("/:id/with-roles", authMiddleware.authenticate, userController.showWi
  *       500:
  *         description: Internal server error
  */
-router.post("/", authMiddleware.authenticate, validateUser, userController.store);
+router.post(
+  "/",
+  authMiddleware.authenticate,
+  validateUser,
+  userController.store,
+);
 
 /**
  * @swagger
@@ -198,7 +211,12 @@ router.post("/", authMiddleware.authenticate, validateUser, userController.store
  *       500:
  *         description: Internal server error
  */
-router.put("/:id", authMiddleware.authenticate, validateUser, userController.update);
+router.put(
+  "/:id",
+  authMiddleware.authenticate,
+  validateUser,
+  userController.update,
+);
 
 /**
  * @swagger
@@ -256,6 +274,10 @@ router.delete("/:id", authMiddleware.authenticate, userController.destroy);
  *       500:
  *         description: Internal server error
  */
-router.post("/:id/restore", authMiddleware.authenticate, userController.restore);
+router.post(
+  "/:id/restore",
+  authMiddleware.authenticate,
+  userController.restore,
+);
 
 module.exports = router;

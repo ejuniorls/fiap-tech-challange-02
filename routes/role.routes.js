@@ -1,32 +1,32 @@
 var express = require("express");
 var router = express.Router();
-const postController = require("../controllers/postController");
+const roleController = require("../controllers/role.controller");
 
 /**
  * @swagger
  * tags:
- *   name: Posts
- *   description: Gerenciamento de posts
+ *   name: Roles
+ *   description: Gerenciamento de roles
  */
 
 /**
  * @swagger
- * /posts:
+ * /roles:
  *   get:
- *     summary: Lista todos os posts
- *     tags: [Posts]
+ *     summary: Lista todos os roles
+ *     tags: [Roles]
  *     responses:
  *       200:
- *         description: Lista de posts
+ *         description: Lista de roles
  */
-router.get("/", postController.index);
+router.get("/", roleController.index);
 
 /**
  * @swagger
- * /posts/{id}:
+ * /roles/{id}:
  *   get:
- *     summary: Obtém um post pelo ID
- *     tags: [Posts]
+ *     summary: Obtém um role pelo ID
+ *     tags: [Roles]
  *     parameters:
  *       - name: id
  *         in: path
@@ -39,14 +39,14 @@ router.get("/", postController.index);
  *       404:
  *         description: Role não encontrado
  */
-router.get("/:id", postController.show);
+router.get("/:id", roleController.show);
 
 /**
  * @swagger
- * /posts:
+ * /roles:
  *   post:
- *     summary: Cria um novo post
- *     tags: [Posts]
+ *     summary: Cria um novo role
+ *     tags: [Roles]
  *     requestBody:
  *       required: true
  *       content:
@@ -62,14 +62,14 @@ router.get("/:id", postController.show);
  *       201:
  *         description: Role criado
  */
-router.post("/", postController.store);
+router.post("/", roleController.store);
 
 /**
  * @swagger
- * /posts/{id}:
+ * /roles/{id}:
  *   put:
- *     summary: Atualiza um post
- *     tags: [Posts]
+ *     summary: Atualiza um role
+ *     tags: [Roles]
  *     parameters:
  *       - name: id
  *         in: path
@@ -91,14 +91,14 @@ router.post("/", postController.store);
  *       200:
  *         description: Role atualizado
  */
-router.put("/:id", postController.update);
+router.put("/:id", roleController.update);
 
 /**
  * @swagger
- * /posts/{id}:
+ * /roles/{id}:
  *   delete:
- *     summary: Deleta um post
- *     tags: [Posts]
+ *     summary: Deleta um role
+ *     tags: [Roles]
  *     parameters:
  *       - name: id
  *         in: path
@@ -109,14 +109,14 @@ router.put("/:id", postController.update);
  *       204:
  *         description: Role deletado
  */
-router.delete("/:id", postController.destroy);
+router.delete("/:id", roleController.destroy);
 
 /**
  * @swagger
- * /posts/{id}/restore:
+ * /roles/{id}/restore:
  *   post:
- *     summary: Restaura um post deletado (soft delete)
- *     tags: [Posts]
+ *     summary: Restaura um role deletado (soft delete)
+ *     tags: [Roles]
  *     parameters:
  *       - name: id
  *         in: path
@@ -127,6 +127,6 @@ router.delete("/:id", postController.destroy);
  *       200:
  *         description: Role restaurado
  */
-router.post("/:id/restore", postController.restore);
+router.post("/:id/restore", roleController.restore);
 
 module.exports = router;

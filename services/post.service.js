@@ -1,6 +1,6 @@
 const { Post } = require("../models");
-const { generateUniqueSlug } = require("../utils/slug");
-const BaseService = require("./BaseService");
+const { generateUniqueSlug } = require("../utils/slug-generator.util");
+const BaseService = require("./base.service");
 
 class PostService extends BaseService {
   constructor() {

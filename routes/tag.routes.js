@@ -1,32 +1,32 @@
 var express = require("express");
 var router = express.Router();
-const roleController = require("../controllers/roleController");
+const tagController = require("../controllers/tag.controller");
 
 /**
  * @swagger
  * tags:
- *   name: Roles
- *   description: Gerenciamento de roles
+ *   name: Tags
+ *   description: Gerenciamento de tags
  */
 
 /**
  * @swagger
- * /roles:
+ * /tags:
  *   get:
- *     summary: Lista todos os roles
- *     tags: [Roles]
+ *     summary: Lista todos os tags
+ *     tags: [Tags]
  *     responses:
  *       200:
- *         description: Lista de roles
+ *         description: Lista de tags
  */
-router.get("/", roleController.index);
+router.get("/", tagController.index);
 
 /**
  * @swagger
- * /roles/{id}:
+ * /tags/{id}:
  *   get:
- *     summary: Obtém um role pelo ID
- *     tags: [Roles]
+ *     summary: Obtém um categoria pelo ID
+ *     tags: [Tags]
  *     parameters:
  *       - name: id
  *         in: path
@@ -35,18 +35,18 @@ router.get("/", roleController.index);
  *           type: integer
  *     responses:
  *       200:
- *         description: Role encontrado
+ *         description: Tag encontrado
  *       404:
- *         description: Role não encontrado
+ *         description: Tag não encontrado
  */
-router.get("/:id", roleController.show);
+router.get("/:id", tagController.show);
 
 /**
  * @swagger
- * /roles:
+ * /tags:
  *   post:
- *     summary: Cria um novo role
- *     tags: [Roles]
+ *     summary: Cria um novo categoria
+ *     tags: [Tags]
  *     requestBody:
  *       required: true
  *       content:
@@ -54,22 +54,24 @@ router.get("/:id", roleController.show);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               username:
  *                 type: string
- *               description:
+ *               email:
+ *                 type: string
+ *               password:
  *                 type: string
  *     responses:
  *       201:
- *         description: Role criado
+ *         description: Tag criado
  */
-router.post("/", roleController.store);
+router.post("/", tagController.store);
 
 /**
  * @swagger
- * /roles/{id}:
+ * /tags/{id}:
  *   put:
- *     summary: Atualiza um role
- *     tags: [Roles]
+ *     summary: Atualiza um categoria
+ *     tags: [Tags]
  *     parameters:
  *       - name: id
  *         in: path
@@ -83,22 +85,24 @@ router.post("/", roleController.store);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               username:
  *                 type: string
- *               description:
+ *               email:
+ *                 type: string
+ *               password:
  *                 type: string
  *     responses:
  *       200:
- *         description: Role atualizado
+ *         description: Tag atualizado
  */
-router.put("/:id", roleController.update);
+router.put("/:id", tagController.update);
 
 /**
  * @swagger
- * /roles/{id}:
+ * /tags/{id}:
  *   delete:
- *     summary: Deleta um role
- *     tags: [Roles]
+ *     summary: Deleta um categoria
+ *     tags: [Tags]
  *     parameters:
  *       - name: id
  *         in: path
@@ -107,16 +111,16 @@ router.put("/:id", roleController.update);
  *           type: integer
  *     responses:
  *       204:
- *         description: Role deletado
+ *         description: Tag deletado
  */
-router.delete("/:id", roleController.destroy);
+router.delete("/:id", tagController.destroy);
 
 /**
  * @swagger
- * /roles/{id}/restore:
+ * /tags/{id}/restore:
  *   post:
- *     summary: Restaura um role deletado (soft delete)
- *     tags: [Roles]
+ *     summary: Restaura um categoria deletado (soft delete)
+ *     tags: [Tags]
  *     parameters:
  *       - name: id
  *         in: path
@@ -125,8 +129,8 @@ router.delete("/:id", roleController.destroy);
  *           type: integer
  *     responses:
  *       200:
- *         description: Role restaurado
+ *         description: Tag restaurado
  */
-router.post("/:id/restore", roleController.restore);
+router.post("/:id/restore", tagController.restore);
 
 module.exports = router;

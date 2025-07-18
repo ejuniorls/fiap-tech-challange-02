@@ -13,48 +13,48 @@ module.exports = {
       token: {
         type: Sequelize.STRING(512),
         allowNull: false,
-        unique: true
+        unique: true,
       },
       expires_at: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
       },
       is_revoked: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
-        allowNull: false
+        allowNull: false,
       },
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'users',
-          key: 'id'
+          model: "users",
+          key: "id",
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
       deleted_at: {
         type: Sequelize.DATE,
-        allowNull: true
+        allowNull: true,
       },
     });
 
-    await queryInterface.addIndex('refresh_tokens', ['token'], {
+    await queryInterface.addIndex("refresh_tokens", ["token"], {
       unique: true,
       where: {
-        deleted_at: null
-      }
+        deleted_at: null,
+      },
     });
   },
   async down(queryInterface, Sequelize) {

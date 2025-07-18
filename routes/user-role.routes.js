@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const userRoleController = require("../controllers/userRoleController");
+const userRoleController = require("../controllers/user-role.controller");
 
 // Listar todas as relações
 router.get("/", userRoleController.index);
